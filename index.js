@@ -26,6 +26,8 @@ const authMiddleware=(req,res,next)=>{
       next();
     }
   }
+
+  
   app.listen(3000,()=>{
     console.log("server started at port :3000");
 })
@@ -46,7 +48,7 @@ app.post('/login',(req,res)=>{
     app.post('/add',(req,res)=>{
         console.log(req.body);
         
-        dataservice.add(req,req.body.name,req.body.price,req.body.qty)
+        dataservice.add(req,req.body.name,req.body.price,req.body.qty,req.body.category)
         .then(result=>{
           res.status(result.statusCode).json(result); 
         })
@@ -59,7 +61,7 @@ app.post('/login',(req,res)=>{
            })
               
            });
-           app.get('/search',(req,res)=>{
+           app.post('/search',(req,res)=>{
             console.log(req.body);
             dataservice.search(req,req.body.search)
             .then(result=>{

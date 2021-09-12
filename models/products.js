@@ -20,6 +20,10 @@ const Product=mongoose.model('Product',{
     Quantity:{
         type: Number,
         index: true
+    },
+    Category:{
+        type: String,
+        index: true
     }
     
 })

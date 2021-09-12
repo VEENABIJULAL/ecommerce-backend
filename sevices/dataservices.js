@@ -53,7 +53,7 @@ const login=(req,username,password)=>{
        }
      })
    }
-   const add=(req,name,price,qty)=>{
+   const add=(req,name,price,qty,category)=>{
     let Name=name;
  return products.Product.findOne({Name})
  .then(result=>{
@@ -68,7 +68,8 @@ const login=(req,username,password)=>{
      const newProduct=new products.Product({
          Name:name,
          Price:price,
-         Quantity:qty
+         Quantity:qty,
+         Category:category
        
      })
      console.log(newProduct)
@@ -103,12 +104,27 @@ const displayProducts=()=>{
  }  
 
  const search=(req,res,next)=>{
-   const searchField=req.query.name;
-   console.log(searchField);
-   products.Product.find({name:{$regex:searchField,$options:'$i'}})
-   .then(data=>{
-     res.send(data);
-   })
+   let Name=req.body.search
+   console.log(Name);
+  return products.Product.findOne({Name})
+  .then(user=>{
+    
+    if(!user){
+      return{
+        statuscode:422,
+        status:false,
+        message:"error...."
+       }
+    }
+      else{
+        console.log(user["Price"]);
+        return{
+          statuscode:200,
+          status:true,
+          message:(user["Price"]) 
+        }   
+      }
+  })
  }
 
    module.exports={
